@@ -1,0 +1,250 @@
+
+[
+  {
+    "id": "1",
+    "make": "Nissan",
+    "model": "Z",
+    "year": 2024,
+    "type": "Luxury",
+    "transmission": "Automatic",
+    "fuelType": "Electric",
+    "pricePerDay": 550,
+    "seats": 2,
+    "features": ["Leather seats", "Navigation", "Bluetooth", "Heated seats"],
+    "imageUrl": "assets/images/nissan-z.png",
+    "location": {
+      "country": "USA",
+      "city": "New York"
+    },
+    "rating": 4.8,
+    "available": true
+  },
+  {
+    "id": "2",
+    "make": "Audi",
+    "model": "A6 Quattro",
+    "year": 2023,
+    "type": "Luxury",
+    "transmission": "Automatic",
+    "fuelType": "Diesel",
+    "pricePerDay": 180,
+    "seats": 5,
+    "features": ["Leather seats", "Navigation", "Bluetooth", "Heated seats", "Sunroof"],
+    "imageUrl": "assets/images/audi-a6.png",
+    "location": {
+      "country": "Ukraine",
+      "city": "Kyiv"
+    },
+    "rating": 4.8,
+    "available": true
+  },
+  {
+    "id": "3",
+    "make": "Ford",
+    "model": "Focus",
+    "year": 2019,
+    "type": "Passenger car",
+    "transmission": "Manual",
+    "fuelType": "Gasoline",
+    "pricePerDay": 110,
+    "seats": 5,
+    "features": ["Bluetooth", "Air conditioning"],
+    "imageUrl": "assets/images/ford-focus.png",
+    "location": {
+      "country": "Ukraine",
+      "city": "Kyiv"
+    },
+    "rating": 4.8,
+    "available": true
+  },
+  {
+    "id": "4",
+    "make": "Jeep",
+    "model": "Wrangler",
+    "year": 2020,
+    "type": "SUV",
+    "transmission": "Automatic",
+    "fuelType": "Diesel",
+    "pricePerDay": 180,
+    "seats": 5,
+    "features": ["4x4", "Bluetooth", "Roof rack"],
+    "imageUrl": "assets/images/jeep-2020.png",
+    "location": {
+      "country": "Ukraine",
+      "city": "Kyiv"
+    },
+    "rating": 4.8,
+    "available": true
+  },
+  {
+    "id": "5",
+    "make": "Nissan",
+    "model": "Z",
+    "year": 2024,
+    "type": "Luxury",
+    "transmission": "Automatic",
+    "fuelType": "Hybrid",
+    "pricePerDay": 550,
+    "seats": 2,
+    "features": ["Leather seats", "Navigation", "Bluetooth", "Heated seats"],
+    "imageUrl": "assets/images/nissan-z.png",
+    "location": {
+      "country": "Ukraine",
+      "city": "Kyiv"
+    },
+    "rating": 4.8,
+    "available": true
+  },
+  {
+    "id": "6",
+    "make": "Ford",
+    "model": "Focus",
+    "year": 2019,
+    "type": "Passenger car",
+    "transmission": "Manual",
+    "fuelType": "Electric",
+    "pricePerDay": 110,
+    "seats": 5,
+    "features": ["Bluetooth", "Air conditioning"],
+    "imageUrl": "assets/images/ford-focus.png",
+    "location": {
+      "country": "USA",
+      "city": "Chicago"
+    },
+    "rating": 4.8,
+    "available": true
+  },
+  {
+    "id": "7",
+    "make": "Nissan",
+    "model": "Z",
+    "year": 2024,
+    "type": "Luxury",
+    "transmission": "Automatic",
+    "fuelType": "Diesel",
+    "pricePerDay": 550,
+    "seats": 2,
+    "features": ["Leather seats", "Navigation", "Bluetooth", "Heated seats"],
+    "imageUrl": "assets/images/nissan-z.png",
+    "location": {
+      "country": "USA",
+      "city": "Los Angeles"
+    },
+    "rating": 4.8,
+    "available": true
+  },
+  {
+    "id": "8",
+    "make": "Ford",
+    "model": "Focus",
+    "year": 2019,
+    "type": "Passenger car",
+    "transmission": "Manual",
+    "fuelType": "Gasoline",
+    "pricePerDay": 110,
+    "seats": 5,
+    "features": ["Bluetooth", "Air conditioning"],
+    "imageUrl": "assets/images/ford-focus.png",
+    "location": {
+      "country": "Ukraine",
+      "city": "Kyiv"
+    },
+    "rating": 4.8,
+    "available": true
+  },
+  {
+    "id": "9",
+    "make": "Jeep",
+    "model": "Wrangler",
+    "year": 2020,
+    "type": "SUV",
+    "transmission": "Manual",
+    "fuelType": "Diesel",
+    "pricePerDay": 180,
+    "seats": 5,
+    "features": ["4x4", "Bluetooth", "Roof rack"],
+    "imageUrl": "assets/images/jeep-2020.png",
+    "location": {
+      "country": "Ukraine",
+      "city": "Kyiv"
+    },
+    "rating": 4.8,
+    "available": true
+  },
+  {
+    "id": "10",
+    "make": "Audi",
+    "model": "A6 Quattro",
+    "year": 2023,
+    "type": "Luxury",
+    "transmission": "Automatic",
+    "fuelType": "Hybrid",
+    "pricePerDay": 180,
+    "seats": 5,
+    "features": ["Leather seats", "Navigation", "Bluetooth", "Heated seats", "Sunroof"],
+    "imageUrl": "assets/images/audi-a6.png",
+    "location": {
+      "country": "Ukraine",
+      "city": "Kyiv"
+    },
+    "rating": 4.8,
+    "available": true
+  },
+  {
+    "id": "11",
+    "make": "Nissan",
+    "model": "Z",
+    "year": 2024,
+    "type": "Luxury",
+    "transmission": "Automatic",
+    "fuelType": "Gasoline",
+    "pricePerDay": 550,
+    "seats": 2,
+    "features": ["Leather seats", "Navigation", "Bluetooth", "Heated seats"],
+    "imageUrl": "assets/images/nissan-z.png",
+    "location": {
+      "country": "USA",
+      "city": "New York"
+    },
+    "rating": 4.8,
+    "available": true
+  },
+  {
+    "id": "12",
+    "make": "Ford",
+    "model": "Transit",
+    "year": 2019,
+    "type": "Van",
+    "transmission": "Manual",
+    "fuelType": "Diesel",
+    "pricePerDay": 110,
+    "seats": 9,
+    "features": ["Bluetooth", "Air conditioning", "Large cargo space"],
+    "imageUrl": "assets/images/ford-focus.png",
+    "location": {
+      "country": "Ukraine",
+      "city": "Kyiv"
+    },
+    "rating": 4.8,
+    "available": true
+  },
+  {
+    "id": "13",
+    "make": "Audi",
+    "model": "A6 Quattro",
+    "year": 2023,
+    "type": "Luxury",
+    "transmission": "Automatic",
+    "fuelType": "Electric",
+    "pricePerDay": 180,
+    "seats": 5,
+    "features": ["Leather seats", "Navigation", "Bluetooth", "Heated seats", "Sunroof"],
+    "imageUrl": "assets/images/audi-a6.png",
+    "location": {
+      "country": "Ukraine",
+      "city": "Kyiv"
+    },
+    "rating": 4.8,
+    "available": true
+  }
+]

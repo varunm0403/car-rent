@@ -1,0 +1,190 @@
+<nav class="flex items-center justify-between bg-white px-8 py-4 border-b border-gray-300 relative">
+  <!-- Logo -->
+  <div class="text-2xl font-semibold">
+    Flexi<span class="text-red-600 font-bold">Ride</span>
+  </div>
+
+  <!-- Hamburger Menu Button (visible on mobile) -->
+  <button class="md:hidden text-black text-2xl menu-toggle" (click)="toggleMenu()">
+    ☰
+  </button>
+
+  <!-- Navigation Tabs (desktop) -->
+  <ul class="hidden md:flex space-x-8">
+    <!-- admin: Only sees Dashboard -->
+    <ng-container *ngIf="user?.role === 'Admin'">
+      <li>
+        <a routerLink="/admin-dashboard" 
+           routerLinkActive="border-b-2 border-red-600" 
+           class="pb-1 text-black hover:text-red-600">Dashboard</a>
+      </li>
+    </ng-container>
+    
+    <!-- SUPPORT: Sees Bookings, Cars, Clients -->
+    <ng-container *ngIf="user?.role === 'Support'">
+      <li>
+        <a routerLink="/support-dashboard" 
+           routerLinkActive="border-b-2 border-red-600" 
+           class="pb-1 text-black hover:text-red-600">Bookings</a>
+      </li>
+      <li>
+        <a routerLink="/cars"
+           [class.border-b-2]="isCarsActive()"
+           [class.border-red-600]="isCarsActive()"
+           class="pb-1 text-black hover:text-red-600">Cars</a>
+      </li>
+      <li>
+        <a routerLink="/client" 
+           routerLinkActive="border-b-2 border-red-600" 
+           class="pb-1 text-black hover:text-red-600">Clients</a>
+      </li>
+    </ng-container>
+    
+    <!-- USER or Not Logged In: Sees Home, Cars, My Bookings (if logged in) -->
+    <ng-container *ngIf="!user || user?.role !== 'Admin' && user?.role !== 'Support'">
+      <li>
+        <a routerLink="/" 
+           routerLinkActive="border-b-2 border-red-600" 
+           [routerLinkActiveOptions]="{ exact: true }" 
+           class="pb-1 text-black hover:text-red-600">Home</a>
+      </li>
+      <li>
+        <a routerLink="/cars"
+           [class.border-b-2]="isCarsActive()"
+           [class.border-red-600]="isCarsActive()"
+           class="pb-1 text-black hover:text-red-600">Cars</a>
+      </li>
+      <li *ngIf="isLoggedIn">
+        <a routerLink="/my-bookings" 
+           routerLinkActive="border-b-2 border-red-600" 
+           class="pb-1 text-black hover:text-red-600">My Bookings</a>
+      </li>
+    </ng-container>
+  </ul>
+
+  <!-- Mobile Menu Dropdown -->
+  <div *ngIf="isMenuOpen" class="absolute top-full left-0 w-full bg-white border-t border-gray-300 md:hidden z-50 mobile-menu">
+    <ul class="flex flex-col px-6 py-4 space-y-2">
+      <!-- admin: Only sees Dashboard (Mobile) -->
+      <ng-container *ngIf="user?.role === 'Admin'">
+        <li>
+          <a routerLink="/admin-dashboard" 
+             routerLinkActive="text-red-600" 
+             class="text-black hover:text-red-600" 
+             (click)="isMenuOpen = false">Dashboard</a>
+        </li>
+      </ng-container>
+      
+      <!-- SUPPORT: Sees Bookings, Cars, Clients (Mobile) -->
+      <ng-container *ngIf="user?.role === 'Support'">
+        <li>
+          <a routerLink="/support-dashboard" 
+             routerLinkActive="text-red-600" 
+             class="text-black hover:text-red-600" 
+             (click)="isMenuOpen = false">Bookings</a>
+        </li>
+        <li>
+          <a routerLink="/cars" 
+             routerLinkActive="text-red-600" 
+             class="text-black hover:text-red-600" 
+             (click)="isMenuOpen = false">Cars</a>
+        </li>
+        <li>
+          <a routerLink="/client" 
+             routerLinkActive="text-red-600" 
+             class="text-black hover:text-red-600" 
+             (click)="isMenuOpen = false">Clients</a>
+        </li>
+      </ng-container>
+      
+      <!-- USER or Not Logged In: Sees Home, Cars, Login/My Bookings (Mobile) -->
+      <ng-container *ngIf="!user || user?.role !== 'Admin' && user?.role !== 'Support'">
+        <li>
+          <a routerLink="/" 
+             routerLinkActive="text-red-600" 
+             [routerLinkActiveOptions]="{ exact: true }" 
+             class="text-black hover:text-red-600" 
+             (click)="isMenuOpen = false">Home</a>
+        </li>
+        <li>
+          <a routerLink="/cars" 
+             routerLinkActive="text-red-600" 
+             class="text-black hover:text-red-600" 
+             (click)="isMenuOpen = false">Cars</a>
+        </li>
+        <li *ngIf="!isLoggedIn">
+          <a routerLink="/login" 
+             routerLinkActive="text-red-600" 
+             class="text-black hover:text-red-600" 
+             (click)="isMenuOpen = false">Log In</a>
+        </li>
+        <li *ngIf="isLoggedIn">
+          <a routerLink="/my-bookings" 
+             routerLinkActive="text-red-600" 
+             class="text-black hover:text-red-600" 
+             (click)="isMenuOpen = false">My Bookings</a>
+        </li>
+      </ng-container>
+      
+      <!-- Common mobile menu items for logged in users -->
+      <li *ngIf="isLoggedIn" class="flex items-center space-x-2 mt-4">
+        <img [src]="user?.image || 'https://via.placeholder.com/40'" class="w-10 h-10 rounded-full border-2 border-orange-500" />
+        <div class="text-sm">Hello, {{ user?.firstName }} ({{ user?.role }})
+        </div>
+        <svg class="cursor-pointer" width="17" height="20" viewBox="0 0 17 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1.7 6.80924C1.7 5.00332 2.41643 3.27136 3.69167 1.99438C4.96692 0.7174 6.69653 0 8.5 0C10.3035 0 12.0331 0.7174 13.3083 1.99438C14.5836 3.27136 15.3 5.00332 15.3 6.80924V10.8071L17 13.3606V17.0231H12.2306C12.0373 17.8689 11.563 18.624 10.8854 19.1647C10.2078 19.7055 9.36693 20 8.50043 20C7.63392 20 6.79308 19.7055 6.11545 19.1647C5.43782 18.624 4.96354 17.8689 4.7702 17.0231H0V13.3606L1.7 10.8071V6.80924ZM6.5518 17.0231C6.71702 17.4029 6.98938 17.7262 7.33546 17.9532C7.68153 18.1803 8.08627 18.3012 8.5 18.3012C8.91373 18.3012 9.31847 18.1803 9.66454 17.9532C10.0106 17.7262 10.283 17.4029 10.4482 17.0231H6.5518ZM8.5 1.70231C7.1474 1.70231 5.85019 2.24036 4.89376 3.1981C3.93732 4.15583 3.4 5.4548 3.4 6.80924V11.3229L1.7 13.8764V15.3208H15.3V13.8764L13.6 11.3229V6.80924C13.6 5.4548 13.0627 4.15583 12.1062 3.1981C11.1498 2.24036 9.8526 1.70231 8.5 1.70231Z" fill="black"/>
+        </svg>
+      </li>
+      <li *ngIf="isLoggedIn">
+        <button class="text-left w-full text-gray-400 hover:text-black" (click)="goToProfile(); isMenuOpen = false">My Profile</button>
+      </li>
+      <li *ngIf="isLoggedIn">
+        <button class="text-left w-full text-gray-400 hover:text-black" (click)="logout(); isMenuOpen = false">Logout</button>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Right Side -->
+  <div class="hidden md:flex items-center space-x-6">
+    <!-- If not logged in: Show Login -->
+    <ng-container *ngIf="!isLoggedIn; else loggedInTemplate">
+      <button routerLink="/login" class="px-4 py-1 border border-black rounded hover:bg-black hover:text-white transition">Log in</button>
+    </ng-container>
+
+    <!-- If logged in: Show Profile Info -->
+    <ng-template #loggedInTemplate>
+      <div class="relative profile-dropdown">
+        <!-- Avatar and name -->
+        <div class="flex items-center space-x-2 cursor-pointer" (click)="toggleDropdown()">
+          <img [src]="user?.image || 'https://via.placeholder.com/40'" alt="User Avatar" class="w-10 h-10 rounded-full border-2 border-orange-500 object-cover" />
+          <div class="text-sm">Hello, {{ user?.firstName }} ({{ user?.role }})</div>
+        </div>
+
+        <!-- Dropdown -->
+        <div *ngIf="dropdownOpen" class="absolute mt-2 w-40 right-0 bg-white rounded-lg shadow-md z-50">
+          <div class="flex flex-col">
+            <button class="text-white font-medium bg-black px-4 py-2 rounded-t-md text-left hover:bg-gray-800" (click)="goToProfile()">My profile</button>
+            <button class="text-gray-400 px-4 py-2 rounded-b-md text-left hover:text-black hover:bg-gray-100" (click)="logout()">Log out</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notification Bell -->
+      <div class="cursor-pointer text-xl">
+        <svg width="17" height="20" viewBox="0 0 17 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1.7 6.80924C1.7 5.00332 2.41643 3.27136 3.69167 1.99438C4.96692 0.7174 6.69653 0 8.5 0C10.3035 0 12.0331 0.7174 13.3083 1.99438C14.5836 3.27136 15.3 5.00332 15.3 6.80924V10.8071L17 13.3606V17.0231H12.2306C12.0373 17.8689 11.563 18.624 10.8854 19.1647C10.2078 19.7055 9.36693 20 8.50043 20C7.63392 20 6.79308 19.7055 6.11545 19.1647C5.43782 18.624 4.96354 17.8689 4.7702 17.0231H0V13.3606L1.7 10.8071V6.80924ZM6.5518 17.0231C6.71702 17.4029 6.98938 17.7262 7.33546 17.9532C7.68153 18.1803 8.08627 18.3012 8.5 18.3012C8.91373 18.3012 9.31847 18.1803 9.66454 17.9532C10.0106 17.7262 10.283 17.4029 10.4482 17.0231H6.5518ZM8.5 1.70231C7.1474 1.70231 5.85019 2.24036 4.89376 3.1981C3.93732 4.15583 3.4 5.4548 3.4 6.80924V11.3229L1.7 13.8764V15.3208H15.3V13.8764L13.6 11.3229V6.80924C13.6 5.4548 13.0627 4.15583 12.1062 3.1981C11.1498 2.24036 9.8526 1.70231 8.5 1.70231Z" fill="black"/>
+        </svg>
+      </div>
+    </ng-template>
+
+    <!-- Language Selector -->
+    <div class="relative text-sm cursor-pointer" (click)="toggleLanguageDropdown()">
+      {{ selectedLanguage }} <span class="text-xs">&#x25BE;</span>
+      <div *ngIf="languageDropdownOpen" class="absolute mt-2 right-0 bg-white border rounded shadow-md z-50 w-20">
+        <div class="px-3 py-2 hover:bg-gray-100 cursor-pointer" (click)="selectLanguage('En')">En</div>
+        <div class="px-3 py-2 hover:bg-gray-100 cursor-pointer" (click)="selectLanguage('Hi')">Hi</div>
+        <div class="px-3 py-2 hover:bg-gray-100 cursor-pointer" (click)="selectLanguage('Fr')">Fr</div>
+      </div>
+    </div>
+  </div>
+</nav>

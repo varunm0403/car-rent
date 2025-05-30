@@ -1,0 +1,177 @@
+<!-- src/app/shared/components/documents/documents.component.html -->
+<div class="bg-gray-50 min-h-screen">
+    <!-- Main content container -->
+    <div class="max-w-6xl mx-auto px-4 py-8">
+      <h1 class="text-3xl font-bold mb-8">My profile</h1>
+      
+      <div class="flex flex-row">
+        <!-- Use the shared sidebar component -->
+        <app-profile-sidebar class="w-1/4 pr-8 pt-14"></app-profile-sidebar>
+        
+        <!-- Right content area -->
+        <div class="w-3/4">
+          <h2 class="text-2xl font-bold mb-6">Documents</h2>
+          
+          <!-- Passport section -->
+          <div class="mb-8">
+            <h3 class="text-base font-medium mb-4">Passport details</h3>
+            
+            <div class="border border-black rounded-md p-6">
+              <!-- Front side upload -->
+              <div class="mb-4">
+                <label class="block text-sm text-gray-600 mb-1">Front side</label>
+                
+                <!-- If document is uploaded, show file info -->
+                <div *ngIf="hasFile(passportDocuments[0])" class="flex items-center justify-between bg-gray-50 p-3 rounded border border-gray-200">
+                  <div class="flex items-center">
+                    <svg class="w-5 h-5 text-gray-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1-3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path>
+                    </svg>
+                    <div>
+                      <p class="text-sm font-medium">{{ passportDocuments[0].name }}</p>
+                      <p class="text-xs text-gray-500">{{ passportDocuments[0].size }}</p>
+                    </div>
+                  </div>
+                  <button class="text-gray-400 hover:text-gray-600" (click)="removeDocument('passport', 'passport-front')">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                  </button>
+                </div>
+                
+                <!-- If no document, show upload area -->
+                <div *ngIf="!hasFile(passportDocuments[0])" class="w-1/2 border-2 border-solid border-gray-300 rounded-md p-6 text-center">
+                  <input type="file" id="passport-front" class="hidden" (change)="onFileSelected($event, 'passport', 'passport-front')" accept=".pdf,.jpg,.jpeg,.png">
+                  <label for="passport-front" class="cursor-pointer">
+                    <svg class="mx-auto h-6 w-6 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                      <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <p class="mt-1 text-sm text-gray-600">Click to upload or drag and drop</p>
+                  </label>
+                </div>
+              </div>
+              
+              <!-- Back side upload -->
+              <div>
+                <label class="block text-sm text-gray-600 mb-1">Back side</label>
+                
+                <!-- If document is uploaded, show file info -->
+                <div *ngIf="hasFile(passportDocuments[1])" class="flex items-center justify-between bg-gray-50 p-3 rounded border border-gray-200">
+                  <div class="flex items-center">
+                    <svg class="w-5 h-5 text-gray-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1-3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path>
+                    </svg>
+                    <div>
+                      <p class="text-sm font-medium">{{ passportDocuments[1].name }}</p>
+                      <p class="text-xs text-gray-500">{{ passportDocuments[1].size }}</p>
+                    </div>
+                  </div>
+                  <button class="text-gray-400 hover:text-gray-600" (click)="removeDocument('passport', 'passport-back')">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                  </button>
+                </div>
+                
+                <!-- If no document, show upload area -->
+                <div *ngIf="!hasFile(passportDocuments[1])" class="w-1/2 border-2 border-solid border-gray-300 rounded-md p-6 text-center">
+                  <input type="file" id="passport-back" class="hidden" (change)="onFileSelected($event, 'passport', 'passport-back')" accept=".pdf,.jpg,.jpeg,.png">
+                  <label for="passport-back" class="cursor-pointer">
+                    <svg class="mx-auto h-6 w-6 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                      <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <p class="mt-1 text-sm text-gray-600">Click to upload or drag and drop</p>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Driving license section -->
+          <div class="mb-8">
+            <h3 class="text-base font-medium mb-4">Driving licence</h3>
+            
+            <div class="border border-black rounded-md p-6">
+              <!-- Front side upload -->
+              <div class="mb-4">
+                <label class="block text-sm text-gray-600 mb-1">Front side</label>
+                
+                <!-- If document is uploaded, show file info -->
+                <div *ngIf="hasFile(licenseDocuments[0])" class="flex items-center justify-between bg-gray-50 p-3 rounded border border-gray-200">
+                  <div class="flex items-center">
+                    <svg class="w-5 h-5 text-gray-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1-3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path>
+                    </svg>
+                    <div>
+                      <p class="text-sm font-medium">{{ licenseDocuments[0].name }}</p>
+                      <p class="text-xs text-gray-500">{{ licenseDocuments[0].size }}</p>
+                    </div>
+                  </div>
+                  <button class="text-gray-400 hover:text-gray-600" (click)="removeDocument('license', 'license-front')">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                  </button>
+                </div>
+                
+                <!-- If no document, show upload area -->
+                <div *ngIf="!hasFile(licenseDocuments[0])" class="w-1/2 border-2 border-solid border-gray-300 rounded-md p-6 text-center">
+                  <input type="file" id="license-front" class="hidden" (change)="onFileSelected($event, 'license', 'license-front')" accept=".pdf,.jpg,.jpeg,.png">
+                  <label for="license-front" class="cursor-pointer">
+                    <svg class="mx-auto h-6 w-6 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                      <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <p class="mt-1 text-sm text-gray-600">Click to upload or drag and drop</p>
+                  </label>
+                </div>
+              </div>
+              
+              <!-- Back side upload -->
+              <div>
+                <label class="block text-sm text-gray-600 mb-1">Back side</label>
+                
+                <!-- If document is uploaded, show file info -->
+                <div *ngIf="hasFile(licenseDocuments[1])" class="flex items-center justify-between bg-gray-50 p-3 rounded border border-gray-200">
+                  <div class="flex items-center">
+                    <svg class="w-5 h-5 text-gray-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1-3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path>
+                    </svg>
+                    <div>
+                      <p class="text-sm font-medium">{{ licenseDocuments[1].name }}</p>
+                      <p class="text-xs text-gray-500">{{ licenseDocuments[1].size }}</p>
+                    </div>
+                  </div>
+                  <button class="text-gray-400 hover:text-gray-600" (click)="removeDocument('license', 'license-back')">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                  </button>
+                </div>
+                
+                <!-- If no document, show upload area -->
+                <div *ngIf="!hasFile(licenseDocuments[1])" class="w-1/2 border-2 border-solid border-gray-300 rounded-md p-6 text-center">
+                  <input type="file" id="license-back" class="hidden" (change)="onFileSelected($event, 'license', 'license-back')" accept=".pdf,.jpg,.jpeg,.png">
+                  <label for="license-back" class="cursor-pointer">
+                    <svg class="mx-auto h-6 w-6 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                      <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <p class="mt-1 text-sm text-gray-600">Click to upload or drag and drop</p>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Save button -->
+          <div class="flex justify-end">
+            <button 
+              (click)="saveChanges()" 
+              class="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-md"
+            >
+              Save changes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

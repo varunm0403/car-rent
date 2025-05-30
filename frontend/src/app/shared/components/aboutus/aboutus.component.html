@@ -1,0 +1,55 @@
+<section class="bg-[#fff] sm:py-6 md:py-12 px-6 lg:px-8" id="about-section">
+  <div class="max-w-screen-xl mx-auto" id="about-container">
+    <!-- About Us Label -->
+    <div class="grid grid-cols-3 gap-10" id="about-label-grid">
+    </div>    
+
+    <!-- Statistics Section -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mt-10" id="stats-section">
+      
+      <!-- About Heading -->
+      <div class="min-h-full mx-0" id="about-heading">
+        <h2 class="text-lg text-gray-500" id="about-title">(ABOUT US)</h2>
+      </div>
+
+      <!-- Years -->
+      <div id="years-section" *ngIf="getInfoByTitle('years') as yearsInfo">
+        <h3 class="text-2xl font-normal mb-2" id="years-label">{{ yearsInfo.title }}</h3>
+        <p class="text-5xl font-semibold mb-3" id="years-value">{{ yearsInfo.numericValue }}</p>
+        <p class="text-sm text-gray-700 leading-relaxed" id="years-description">
+          {{ yearsInfo.description }}
+        </p>
+      </div>
+
+      <!-- Locations -->
+      <div id="locations-section" *ngIf="getInfoByTitle('locations') as locationsInfo">
+        <h3 class="text-2xl font-normal mb-2" id="locations-label">{{ locationsInfo.title }}</h3>
+        <p class="text-5xl font-semibold mb-3" id="locations-value">{{ locationsInfo.numericValue }}</p>
+        <p class="text-sm text-gray-700 leading-relaxed" id="locations-description">
+          {{ locationsInfo.description }}
+        </p>
+      </div>
+
+      <!-- Empty for layout symmetry -->
+      <div id="placeholder-1"></div>
+
+      <!-- Car Brands -->
+      <div id="car-brands-section" *ngIf="getInfoByTitle('car brands') as carBrandsInfo">
+        <h3 class="text-2xl font-normal mb-2" id="car-brands-label">{{ carBrandsInfo.title }}</h3>
+        <p class="text-5xl font-semibold mb-3" id="car-brands-value">{{ carBrandsInfo.numericValue }}</p>
+        <p class="text-sm text-gray-700 leading-relaxed" id="car-brands-description">
+          {{ carBrandsInfo.description }}
+        </p>
+      </div>
+
+      <!-- Cars -->
+      <div id="cars-section" *ngIf="getInfoByTitle('cars') as carsInfo">
+        <h3 class="text-2xl font-normal mb-2" id="cars-label">{{ carsInfo.title }}</h3>
+        <p class="text-5xl font-semibold mb-3" id="cars-value">{{ carsInfo.numericValue }}</p>
+        <p class="text-sm text-gray-700 leading-relaxed" id="cars-description">
+          {{ carsInfo.description }}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

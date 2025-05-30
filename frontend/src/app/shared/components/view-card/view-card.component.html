@@ -1,0 +1,217 @@
+<section id="car-details-section" class="m-1.5">
+
+  <!-- Error state -->
+  <div id="error-state" *ngIf="error" class="flex justify-center items-center h-64">
+      <p class="text-red-500">Failed to load car details. Please try again later.</p>
+  </div>
+
+  <!-- Card Section -->
+  <div id="car-details-card" *ngIf="car" class="card flex flex-wrap lg:flex-nowrap space-y-4 lg:space-y-0 lg:space-x-3">
+    <div id="car-photos-container" class="photos flex flex-col md:flex-row md:space-x-3 lg:flex-row lg:space-x-3 w-full">
+      <!-- Side photos - now on top for mobile -->
+      <div id="side-photos" class="sidephotos flex space-x-2 space-y-2 overflow-x-auto pb-2 md:flex-col md:space-x-0 md:space-y-1 md:overflow-visible lg:flex-col lg:space-x-0 lg:space-y-1 lg:overflow-visible">
+        <img *ngFor="let photo of car?.images; let i = index"
+             [id]="'side-photo-' + i"
+             [src]="photo"
+             alt="Side photo"
+             class="w-24 h-24 object-cover flex-shrink-0 md:h-22 lg:w-24 lg:h-21" />
+      </div>
+      
+      
+      <!-- Main photo - now below side photos for mobile -->
+      <div id="main-photo-container" class="mainphoto relative w-full">
+        <div id="availability-badge" class="absolute availability bg-white w-24 h-8 rounded-3xl flex items-center justify-center top-2 left-2">
+          <p>{{ car.status}}</p>
+        </div>
+        <img id="main-car-photo" [src]="car?.images[0]" class="w-full lg:w-[805px] h-auto lg:h-[520px] object-cover" alt="Main photo" />
+      </div>
+    </div>
+
+    <div id="car-specs" class="specs bg-[#F0F0F0] w-full lg:w-96 px-3 py-3">
+      <div id="car-header" class="head flex justify-between items-center">
+        <p id="car-model" class="model font-bold text-lg">{{ car.make }} {{ car.model }} {{ car.year }}</p>
+        <div id="car-rating" class="rating flex items-center space-x-1">
+          <p>{{ car.carRating || 4.5 }}</p>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+          </svg>
+        </div>
+      </div>
+      <p id="car-location" class="location text-[13px] text-gray-500">{{ car?.location || 'Ukraine' }}, {{ car.location?.city || 'Kyiv' }}</p>
+      <hr class="border-1 border-[#C4C4C4] my-2" />
+
+      <div id="car-features" class="features grid grid-cols-2 gap-4 mt-6 text-[13px]">
+        <div class="flex items-center gap-2">
+          <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 5C2.46957 5 1.96086 4.78929 1.58579 4.41421C1.21071 4.03914 1 3.53043 1 3C1 2.46957 1.21071 1.96086 1.58579 1.58579C1.96086 1.21071 2.46957 1 3 1C3.53043 1 4.03914 1.21071 4.41421 1.58579C4.78929 1.96086 5 2.46957 5 3C5 3.53043 4.78929 4.03914 4.41421 4.41421C4.03914 4.78929 3.53043 5 3 5ZM3 5V13M10 5C9.46957 5 8.96086 4.78929 8.58579 4.41421C8.21071 4.03914 8 3.53043 8 3C8 2.46957 8.21071 1.96086 8.58579 1.58579C8.96086 1.21071 9.46957 1 10 1C10.5304 1 11.0391 1.21071 11.4142 1.58579C11.7893 1.96086 12 2.46957 12 3C12 3.53043 11.7893 4.03914 11.4142 4.41421C11.0391 4.78929 10.5304 5 10 5ZM10 5V13M3 13C3.53043 13 4.03914 13.2107 4.41421 13.5858C4.78929 13.9609 5 14.4696 5 15C5 15.5304 4.78929 16.0391 4.41421 16.4142C4.03914 16.7893 3.53043 17 3 17C2.46957 17 1.96086 16.7893 1.58579 16.4142C1.21071 16.0391 1 15.5304 1 15C1 14.4696 1.21071 13.9609 1.58579 13.5858C1.96086 13.2107 2.46957 13 3 13ZM10 13C10.5304 13 11.0391 13.2107 11.4142 13.5858C11.7893 13.9609 12 14.4696 12 15C12 15.5304 11.7893 16.0391 11.4142 16.4142C11.0391 16.7893 10.5304 17 10 17C9.46957 17 8.96086 16.7893 8.58579 16.4142C8.21071 16.0391 8 15.5304 8 15C8 14.4696 8.21071 13.9609 8.58579 13.5858C8.96086 13.2107 9.46957 13 10 13ZM15 3C15 3.53043 15.2107 4.03914 15.5858 4.41421C15.9609 4.78929 16.4696 5 17 5C17.5304 5 18.0391 4.78929 18.4142 4.41421C18.7893 4.03914 19 3.53043 19 3C19 2.46957 18.7893 1.96086 18.4142 1.58579C18.0391 1.21071 17.5304 1 17 1C16.4696 1 15.9609 1.21071 15.5858 1.58579C15.2107 1.96086 15 2.46957 15 3Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M17 5V7C17 7.53043 16.7893 8.03914 16.4142 8.41421C16.0391 8.78929 15.5304 9 15 9H3" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <p>{{car?.gearBoxType}}</p>
+        </div>
+      
+        <div class="flex items-center gap-2">
+          <svg width="20" height="16" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 6V12M10 1V4M8 1H12M3 9H1M4 6H6L8 4H11.382C11.5677 4.0001 11.7496 4.05188 11.9075 4.14955C12.0654 4.24722 12.193 4.38692 12.276 4.553L13.724 7.447C13.807 7.61308 13.9346 7.75278 14.0925 7.85045C14.2504 7.94812 14.4323 7.9999 14.618 8H16V6H18C18.2652 6 18.5196 6.10536 18.7071 6.29289C18.8946 6.48043 19 6.73478 19 7V13C19 13.2652 18.8946 13.5196 18.7071 13.7071C18.5196 13.8946 18.2652 14 18 14H16V12H13V14C13 14.2652 12.8946 14.5196 12.7071 14.7071C12.5196 14.8946 12.2652 15 12 15H8.535C8.37041 15 8.20835 14.9594 8.06322 14.8818C7.91808 14.8042 7.79435 14.6919 7.703 14.555L6 12H4V6Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <p>{{car?.engineCapacity}}</p>
+        </div>
+      
+        <div class="flex items-center gap-2">
+          <svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 8H13C13.5304 8 14.0391 8.21071 14.4142 8.58579C14.7893 8.96086 15 9.46957 15 10V13C15 13.3978 15.158 13.7794 15.4393 14.0607C15.7206 14.342 16.1022 14.5 16.5 14.5C16.8978 14.5 17.2794 14.342 17.5607 14.0607C17.842 13.7794 18 13.3978 18 13V6L15 3M2 17V3C2 2.46957 2.21071 1.96086 2.58579 1.58579C2.96086 1.21071 3.46957 1 4 1H10C10.5304 1 11.0391 1.21071 11.4142 1.58579C11.7893 1.96086 12 2.46957 12 3V17M1 17H13" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M16 4V5C16 5.26522 16.1054 5.51957 16.2929 5.70711C16.4804 5.89464 16.7348 6 17 6H18M2 8H12" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <p>{{car?.fuelType}}</p>
+        </div>
+      
+        <div class="flex items-center gap-2">
+          <svg width="16" height="21" viewBox="0 0 16 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 15V20M6 15H10M6 15L5 8M10 15V20M10 15L11 8M5 8H11M5 8C3.66667 8 2.33333 8.66667 1 10M11 8C12.3333 8 13.6667 8.66667 15 10M6 3C6 3.53043 6.21071 4.03914 6.58579 4.41421C6.96086 4.78929 7.46957 5 8 5C8.53043 5 9.03914 4.78929 9.41421 4.41421C9.78929 4.03914 10 3.53043 10 3C10 2.46957 9.78929 1.96086 9.41421 1.58579C9.03914 1.21071 8.53043 1 8 1C7.46957 1 6.96086 1.21071 6.58579 1.58579C6.21071 1.96086 6 2.46957 6 3Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <p>{{car?.seats}} seats</p>
+        </div>
+      
+        <div class="flex items-center gap-2">
+          <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3.636 16.364C2.37734 15.1054 1.52019 13.5017 1.17293 11.7559C0.82567 10.0101 1.00391 8.20047 1.6851 6.55595C2.36629 4.91142 3.51984 3.50582 4.99988 2.51689C6.47992 1.52796 8.21998 1.00012 10 1.00012C11.78 1.00012 13.5201 1.52796 15.0001 2.51689C16.4802 3.50582 17.6337 4.91142 18.3149 6.55595C18.9961 8.20047 19.1743 10.0101 18.8271 11.7559C18.4798 13.5017 17.6227 15.1054 16.364 16.364M14 6.00004L10 10" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <p>{{car?.fuelConsumption}}</p>
+        </div>
+      
+        <div class="flex items-center gap-2">
+          <svg width="20" height="17" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 12C6 12.7956 5.68393 13.5587 5.12132 14.1213C4.55871 14.6839 3.79565 15 3 15M14 12C14 12.7956 14.3161 13.5587 14.8787 14.1213C15.4413 14.6839 16.2044 15 17 15M10 12V16M1 3C1 2.46957 1.21071 1.96086 1.58579 1.58579C1.96086 1.21071 2.46957 1 3 1H17C17.5304 1 18.0391 1.21071 18.4142 1.58579C18.7893 1.96086 19 2.46957 19 3V7C19 7.53043 18.7893 8.03914 18.4142 8.41421C18.0391 8.78929 17.5304 9 17 9H3C2.46957 9 1.96086 8.78929 1.58579 8.41421C1.21071 8.03914 1 7.53043 1 7V3Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <p>{{car?.climateControlOption}}</p>
+        </div>
+      </div>
+      
+      <!-- Date selection row -->
+      <div id="date-selection" class="space-y-4 relative">
+        <!-- Pick-up date -->
+        <div class="space-y-1 relative">
+          <label class="text-sm text-gray-600">Pick-up date & time</label>
+          <div class="relative date-input">
+            <input id="pickup-date-input" 
+                   type="text" 
+                   readonly 
+                   [value]="formatDateWithTime(pickupDate, pickupTime)" 
+                   (click)="openCalendar('pickup')"
+                   class="w-full p-2 border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-2 focus:ring-red-500 cursor-pointer">
+            <div class="absolute inset-y-0 right-0 flex items-center px-2 cursor-pointer" (click)="openCalendar('pickup')">
+              <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+      
+        <!-- Drop-off date -->
+        <div class="space-y-1 relative">
+          <label class="text-sm text-gray-600">Drop-off date & time</label>
+          <div class="relative date-input">
+            <input id="dropoff-date-input" 
+                   type="text" 
+                   readonly 
+                   [value]="formatDateWithTime(dropoffDate, dropoffTime)" 
+                   (click)="openCalendar('dropoff')"
+                   class="w-full p-2 border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-2 focus:ring-red-500 cursor-pointer">
+            <div class="absolute inset-y-0 right-0 flex items-center px-2 cursor-pointer" (click)="openCalendar('dropoff')">
+              <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+      
+        <!-- Calendar Component -->
+        <app-view-calender
+          *ngIf="showCalendar"
+          id="booking-calendar"
+          [initialPickupDate]="pickupDate"
+          [initialDropoffDate]="dropoffDate"
+          [initialPickupTime]="pickupTime"
+          [initialDropoffTime]="dropoffTime"
+          (dateRangeSelected)="onDateSelected($event)"
+          (closeCalendar)="closeCalendar()">
+        </app-view-calender>
+      </div>
+
+      <div class="button mt-4">
+        <button id="book-car-button" 
+                (click)="bookCar()" 
+                class="bg-red-500 text-white px-4 py-2 rounded-full w-full hover:bg-red-600 transition">
+          Book the Car - ${{ car?.pricePerDay }}/day
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reviews Section -->
+  <div id="reviews-section" class="reviews bg-[#F0F0F0] w-full px-3 mt-4 rounded-lg">
+    <div id="reviews-header" class="header flex justify-between items-center">
+      <p class="pt-3 font-medium">Feedback</p>
+      <div class="text-[12px]">
+        <div class="flex items-center gap-2 max-w-full">
+          <span class="text-gray-500 shrink-0">Sort by:</span>
+          <select id="sort-reviews" 
+                  (change)="onSortChange($event)" 
+                  class="bg-gray-200 p-2 rounded w-full">
+            <option value="newest">Newest</option>
+            <option value="ratingLowHigh">Rating: Low to High</option>
+            <option value="ratingHighLow">Rating: High to Low</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <hr class="border-1 border-[#C4C4C4] my-1" />
+
+    <div *ngFor="let review of staticReviews; let i = index">
+      <div [id]="'review-' + i" class="reviewers flex flex-col md:flex-row justify-around items-start md:items-center py-3">
+        <div class="person flex space-x-3 items-center">
+          <img [id]="'reviewer-avatar-' + i" 
+               [src]="review.profile" 
+               alt="Reviewer photo" 
+               class="w-10 h-10 rounded-full object-cover" />
+          <p [id]="'reviewer-name-' + i" class="font-medium">{{ review.name }}</p>
+        </div>
+        <div class="comment w-full md:w-[80%] mt-4 md:mt-0">
+          <img [id]="'review-rating-' + i" 
+               [src]="review?.ratingImage" 
+               alt="Rating stars" 
+               class="h-4 w-auto mb-1" />
+          <p [id]="'review-comment-' + i" class="text-sm">{{ review.comment }}</p>
+        </div>
+        <div [id]="'review-date-' + i" class="date text-[13px] text-gray-500 mt-2 md:mt-0">{{ review.date }}</div>
+      </div>
+      <hr class="border-1 border-[#C4C4C4] my-1" />
+    </div>
+
+    <!-- Pagination -->
+    <div id="reviews-pagination" class="pages my-6 mb-4 items-center flex justify-center space-x-4 pb-6">
+      <button id="prev-page-button" 
+              (click)="prevPage()" 
+              [disabled]="currentPage === 1"
+              class="bg-gray-200 rounded-full text-center w-8 h-8 flex items-center justify-center hover:bg-gray-300 disabled:opacity-50">
+        ‹
+      </button>
+      <button *ngFor="let page of [1, 2]; let i = index"
+              [id]="'page-button-' + i"
+              (click)="setPage(page)"
+              [ngClass]="{'bg-black text-white': currentPage === page, 'bg-gray-100': currentPage !== page}"
+              class="rounded-full w-8 h-8 text-center flex items-center justify-center hover:bg-gray-200">
+        {{ page }}
+      </button>
+      <button id="next-page-button" 
+              (click)="nextPage()" 
+              [disabled]="currentPage === 2"
+              class="bg-gray-200 rounded-full text-center w-8 h-8 flex items-center justify-center hover:bg-gray-300 disabled:opacity-50">
+        ›
+      </button>
+    </div>
+  </div>
+</section>

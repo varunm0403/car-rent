@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "content": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "author": { "type": "string" },
+          "authorImageUrl": { "type": "string" },
+          "date": { "type": "string" },
+          "rentalExperience": { "type": "string" },
+          "text": { "type": "string" }
+        },
+        "required": ["author", "authorImageUrl", "date", "rentalExperience", "text"]
+      }
+    },
+    "currentPage": { "type": "integer" },
+    "totalElements": { "type": "integer" },
+    "totalPages": { "type": "integer" }
+  },
+  "required": ["content", "currentPage", "totalElements", "totalPages"]
+}

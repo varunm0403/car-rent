@@ -1,0 +1,143 @@
+<div class="relative">
+  
+<div class="absolute top-full right-0 z-50 border border-blue-200 rounded-lg p-4 bg-white shadow-lg w-[430px] lg:w-[500px]">
+  <div class="flex justify-between items-center mb-2">
+    <button (click)="previousMonth()" class="text-gray-600 hover:text-gray-900">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+    </button>
+    
+    <div class="grid grid-cols-2 gap-2 flex-grow text-center">
+      <div class="text-sm font-medium">{{ getMonthName(currentMonth) }}</div>
+      <div class="text-sm font-medium">{{ getMonthName(nextMonth) }}</div>
+    </div>
+    
+    <button (click)="nextMonthNav()" class="text-gray-600 hover:text-gray-900">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
+    </button>
+  </div>
+
+  <div class="grid grid-cols-2 gap-2">
+    <!-- Current Month Calendar -->
+    <div>
+      <div class="grid grid-cols-7 text-center mb-1">
+        <div *ngFor="let day of daysOfWeek" class="text-gray-500 text-xs">{{ day }}</div>
+      </div>
+      <div class="grid grid-cols-7 gap-0.5">
+        <div *ngFor="let day of currentMonthDays" 
+             class="h-6 w-6 flex items-center justify-center text-xs rounded-full"
+             [ngClass]="{
+               'text-gray-400': !day.isCurrentMonth,
+               'bg-black text-white': day.isSelected,
+               'bg-gray-100': day.isInRange,
+               'bg-gray-200 text-gray-500': day.isDisabled,
+               'hover:bg-gray-100 cursor-pointer': !day.isDisabled && !day.isSelected
+             }"
+             (click)="!day.isDisabled && selectDate(day.date, day.month, day.year)">
+          {{ day.date }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Next Month Calendar -->
+    <div>
+      <div class="grid grid-cols-7 text-center mb-1">
+        <div *ngFor="let day of daysOfWeek" class="text-gray-500 text-xs">{{ day }}</div>
+      </div>
+      <div class="grid grid-cols-7 gap-0.5">
+        <div *ngFor="let day of nextMonthDays" 
+             class="h-6 w-6 flex items-center justify-center text-xs rounded-full"
+             [ngClass]="{
+               'text-gray-400': !day.isCurrentMonth,
+               'bg-black text-white': day.isSelected,
+               'bg-gray-100': day.isInRange,
+               'bg-gray-200 text-gray-500': day.isDisabled,
+               'hover:bg-gray-100 cursor-pointer': !day.isDisabled && !day.isSelected
+             }"
+             (click)="!day.isDisabled && selectDate(day.date, day.month, day.year)">
+          {{ day.date }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Time Selection -->
+  <div class="grid grid-cols-2 gap-2 mt-2">
+    <div>
+      <label class="block text-xs font-medium text-gray-700 mb-0.5">Pick-up time</label>
+      <div class="relative">
+        <select [(ngModel)]="pickupTime" class="border border-gray-300 rounded-md w-full py-1 px-2 text-xs focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+          <option value="00:00 AM">12:00 AM</option>
+          <option value="01:00 AM">1:00 AM</option>
+          <option value="02:00 AM">2:00 AM</option>
+          <option value="03:00 AM">3:00 AM</option>
+          <option value="04:00 AM">4:00 AM</option>
+          <option value="05:00 AM">5:00 AM</option>
+          <option value="06:00 AM">6:00 AM</option>
+          <option value="07:00 AM">7:00 AM</option>
+          <option value="08:00 AM">8:00 AM</option>
+          <option value="09:00 AM">9:00 AM</option>
+          <option value="10:00 AM">10:00 AM</option>
+          <option value="11:00 AM">11:00 AM</option>
+          <option value="12:00 PM">12:00 PM</option>
+          <option value="01:00 PM">1:00 PM</option>
+          <option value="02:00 PM">2:00 PM</option>
+          <option value="03:00 PM">3:00 PM</option>
+          <option value="04:00 PM">4:00 PM</option>
+          <option value="05:00 PM">5:00 PM</option>
+          <option value="06:00 PM">6:00 PM</option>
+          <option value="07:00 PM">7:00 PM</option>
+          <option value="08:00 PM">8:00 PM</option>
+          <option value="09:00 PM">9:00 PM</option>
+          <option value="10:00 PM">10:00 PM</option>
+          <option value="11:00 PM">11:00 PM</option>
+        </select>
+      </div>
+    </div>
+    <div>
+      <label class="block text-xs font-medium text-gray-700 mb-0.5">Drop-off time</label>
+      <div class="relative">
+        <select [(ngModel)]="dropoffTime" class="border border-gray-300 rounded-md w-full py-1 px-2 text-xs focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+          <option value="00:00 AM">12:00 AM</option>
+          <option value="01:00 AM">1:00 AM</option>
+          <option value="02:00 AM">2:00 AM</option>
+          <option value="03:00 AM">3:00 AM</option>
+          <option value="04:00 AM">4:00 AM</option>
+          <option value="05:00 AM">5:00 AM</option>
+          <option value="06:00 AM">6:00 AM</option>
+          <option value="07:00 AM">7:00 AM</option>
+          <option value="08:00 AM">8:00 AM</option>
+          <option value="09:00 AM">9:00 AM</option>
+          <option value="10:00 AM">10:00 AM</option>
+          <option value="11:00 AM">11:00 AM</option>
+          <option value="12:00 PM">12:00 PM</option>
+          <option value="01:00 PM">1:00 PM</option>
+          <option value="02:00 PM">2:00 PM</option>
+          <option value="03:00 PM">3:00 PM</option>
+          <option value="04:00 PM">4:00 PM</option>
+          <option value="05:00 PM">5:00 PM</option>
+          <option value="06:00 PM">6:00 PM</option>
+          <option value="07:00 PM">7:00 PM</option>
+          <option value="08:00 PM">8:00 PM</option>
+          <option value="09:00 PM">9:00 PM</option>
+          <option value="10:00 PM">10:00 PM</option>
+          <option value="11:00 PM">11:00 PM</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Action buttons -->
+  <div class="flex justify-end mt-2 space-x-2">
+    <button (click)="cancel()" class="px-2 py-1 border border-gray-300 rounded-md text-xs text-gray-700 hover:bg-gray-50">
+      Cancel
+    </button>
+    <button (click)="applySelection()" class="px-2 py-1 bg-red-600 text-xs text-white rounded-md hover:bg-red-700">
+      Apply
+    </button>
+  </div>
+</div>
+</div>

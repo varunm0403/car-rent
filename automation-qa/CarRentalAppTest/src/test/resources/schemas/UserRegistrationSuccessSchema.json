@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "User Registration Success Response",
+  "type": "object",
+  "required": ["message", "role", "reference", "reference2"],
+  "properties": {
+    "message": {
+      "type": "string",
+      "enum": ["User successfully created"]
+    },
+    "role": {
+      "type": "string",
+      "enum": ["Client","SupportAgent"]
+    },
+    "reference": {
+      "type": "string"
+    },
+    "reference2": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

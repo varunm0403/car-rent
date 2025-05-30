@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.802.0",
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "nodemailer": "^7.0.2",
+    "pdfkit": "^0.17.1"
+  }
+}

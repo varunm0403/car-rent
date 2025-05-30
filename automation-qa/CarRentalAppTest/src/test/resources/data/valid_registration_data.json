@@ -1,0 +1,38 @@
+{
+  "valid_user_registration": {
+    "firstName": "New",
+    "lastName": "User",
+    "email": "newuser@example.com",
+    "password": "SecurePass@123"
+  },
+  "uppercase_email": {
+    "firstName": "Jane",
+    "lastName": "Doe",
+    "email": "USEREMAIL@EXAMPLE.COM",
+    "password": "SecurePass@123"
+  },
+  "edge_case_password": {
+    "firstName": "Edge",
+    "lastName": "Case",
+    "email": "edgecase@example.com",
+    "password": "Aa1@Aa1@"
+  },
+  "not_in_support_agents_list": {
+    "firstName": "NewNon",
+    "lastName": "Agent1",
+    "email": "nonagent1@example.com",
+    "password": "SecurePass@123"
+  },
+  "in_support_agents_list": {
+    "firstName": "Agent",
+    "lastName": "One",
+    "email": "agent1@carental.com",
+    "password": "SecurePass@456!"
+  },
+  "support_agent_email_case": {
+    "firstName": "Case",
+    "lastName": "Sensitive",
+    "email": "Agent2@carental.com",
+    "password": "CasePass@456!"
+  }
+}

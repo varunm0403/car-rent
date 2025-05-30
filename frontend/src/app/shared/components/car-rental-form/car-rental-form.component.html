@@ -1,0 +1,203 @@
+<!-- src/app/shared/components/car-rental-form/car-rental-form.component.html -->
+<h1 id="rental-form-title" class="text-3xl font-bold m-4 mx-3 px-3">Choose a car for rental</h1>
+<div id="rental-form-container" class="max-w-screen p-2 px-4 m-4 mx-4 bg-white border rounded-md border-black">
+  <form id="rental-form" class="space-y-4">
+    <div class="flex justify-between items-center">
+      <h2 id="form-subtitle" class="text-lg font-medium"></h2>
+      <button type="button" (click)="clearFilters()" class="text-red-600 hover:text-red-800 text-sm" id="clear-filters-button">
+        Clear all filters
+      </button>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <!-- Pick-up location -->
+      <div class="space-y-1">
+        <label class="text-sm text-gray-600">Pick-up location</label>
+        <div class="relative">
+          <select
+            id="pickupLocation"
+            [(ngModel)]="pickupLocation"
+            (change)="onLocationChange($event, true)"
+            name="pickupLocation"
+            class="w-full p-2 border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-2 focus:ring-red-500">
+            <option value="" disabled>Choose location</option>
+            <option *ngFor="let location of availableLocations">{{ location }}</option>
+          </select>
+          <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Drop-off location -->
+      <div class="space-y-1">
+        <label class="text-sm text-gray-600">Drop-off location</label>
+        <div class="relative">
+          <select
+            id="dropoffLocation"
+            [(ngModel)]="dropoffLocation"
+            (change)="onLocationChange($event, false)"
+            name="dropoffLocation"
+            class="w-full p-2 border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-2 focus:ring-red-500">
+            <option value="" disabled>Choose location</option>
+            <option *ngFor="let location of availableLocations">{{ location }}</option>
+          </select>
+          <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Date selection row -->
+      <div class="space-y-1">
+        <label class="text-sm text-gray-600">Pick-up date & time</label>
+        <div class="relative">
+          <input type="text" readonly [value]="formatDateWithTime(pickupDate, pickupTime)" (click)="toggleCalendar()"
+            id="pickupDateTime"
+            class="w-full p-2 border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-2 focus:ring-red-500 cursor-pointer">
+          <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Drop-off date -->
+      <div class="space-y-1">
+        <label class="text-sm text-gray-600">Drop-off date & time</label>
+        <div class="relative">
+          <input type="text" readonly [value]="formatDateWithTime(dropoffDate, dropoffTime)" (click)="toggleCalendar()"
+            id="dropoffDateTime"
+          class="w-full p-2 border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-2 focus:ring-red-500 cursor-pointer">
+          <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <!-- Car category -->
+      <div class="space-y-1">
+        <label class="text-sm text-gray-600">Car category</label>
+        <div class="relative">
+          <select
+            id="carCategory"
+            [(ngModel)]="selectedCategory"
+            (change)="onCategoryChange($event)"
+            name="carCategory"
+            class="w-full p-2 border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-2 focus:ring-red-500">
+            <option *ngFor="let category of carCategories">{{ category }}</option>
+          </select>
+          <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gearbox -->
+      <div class="space-y-1">
+        <label class="text-sm text-gray-600">Gearbox</label>
+        <div class="relative">
+          <select
+            id="gearbox"
+            [(ngModel)]="selectedGearbox"
+            (change)="onGearboxChange($event)"
+            name="gearbox"
+            class="w-full p-2 border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-2 focus:ring-red-500">
+            <option *ngFor="let option of gearboxOptions">{{ option }}</option>
+          </select>
+          <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Type of engine -->
+      <div class="space-y-1">
+        <label class="text-sm text-gray-600">Type of engine</label>
+        <div class="relative">
+          <select
+            id="engineType"
+            [(ngModel)]="selectedEngineType"
+            (change)="onEngineTypeChange($event)"
+            name="engineType"
+            class="w-full p-2 border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-2 focus:ring-red-500">
+            <option *ngFor="let type of engineTypes">{{ type }}</option>
+          </select>
+          <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Price range -->
+      <div class="space-y-1 md:col-span-3 lg:col-span-1" id="price-range">
+        <div class="flex justify-between">
+          <label class="text-sm text-gray-600">Price per day</label>
+          <span class="text-sm text-gray-600" id="priceRangeLabel">${{priceRange[0]}} - ${{priceRange[1]}}</span>
+        </div>
+        <div class="px-2 py-4 w-full max-w-[300px] mx-auto">
+          <div class="h-2 bg-gray-200 rounded-full relative slider-track" #sliderTrack>
+            <!-- Colored track between handles -->
+            <div class="h-2 bg-red-600 rounded-full absolute" [style.width]="getTrackWidth()"
+              [style.left]="getTrackLeft()">
+            </div>
+
+            <!-- Left handle -->
+            <div class="absolute -mt-1 w-4 h-4 bg-white border-2 border-red-600 rounded-full cursor-pointer handle"
+              [class.active]="isDragging === 0" [style.left]="getHandlePosition(0)" (mousedown)="startDrag($event, 0)"
+              (touchstart)="startDragTouch($event, 0)">
+            </div>
+
+            <!-- Right handle -->
+            <div class="absolute -mt-1 w-4 h-4 bg-white border-2 border-red-600 rounded-full cursor-pointer handle"
+              [class.active]="isDragging === 1" [style.left]="getHandlePosition(1)" (mousedown)="startDrag($event, 1)"
+              (touchstart)="startDragTouch($event, 1)">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex justify-center sm:justify-center lg:justify-end">
+      <button type="button" (click)="findCars()"
+        id="findCarButton"
+        class="px-20 py-2 bg-red-600 text-white font-medium rounded-full hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+        Find a car
+      </button>
+    </div>
+  </form>
+
+  <!-- Calendar Popup -->
+  <div *ngIf="showCalendar" id="calendarPopup" class="fixed inset-0 bg-opacity-50 flex items-center justify-center z-50">
+    <div class="max-w-4xl w-full mx-4">
+      <app-calendar [initialPickupDate]="pickupDate" [initialDropoffDate]="dropoffDate" [initialPickupTime]="pickupTime"
+        [initialDropoffTime]="dropoffTime" (dateRangeSelected)="onDateRangeSelected($event)"
+        (closeCalendar)="showCalendar = false"></app-calendar>
+    </div>
+  </div>
+</div>

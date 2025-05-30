@@ -1,0 +1,11 @@
+.nav-tab {
+    position: relative;
+    font-weight: 500;
+    padding-bottom: 4px;
+  }
+  
+  .active-tab {
+    border-bottom: 2px solid #d32f2f; /* Red underline */
+    color: #d32f2f;
+  }
+  

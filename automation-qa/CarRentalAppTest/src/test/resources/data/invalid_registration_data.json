@@ -1,0 +1,83 @@
+{
+  "missing_email": {
+    "firstName": "John",
+    "lastName": "Smith",
+    "password": "SecurePass@123"
+  },
+  "empty_first_name": {
+    "firstName": "",
+    "lastName": "Smith",
+    "email": "john_smith@example.com",
+    "password": "SecurePass@123"
+  },
+  "missing_first_name": {
+    "lastName": "Smith",
+    "email": "john_smith@example.com",
+    "password": "SecurePass@123"
+  },
+  "missing_last_name": {
+    "firstName": "John",
+    "email": "john_smith@example.com",
+    "password": "SecurePass@123"
+  },
+  "empty_email": {
+    "firstName": "Jane",
+    "lastName": "Doe",
+    "email": "",
+    "password": "SecurePass@123"
+  },
+  "invalid_password": {
+    "firstName": "Test",
+    "lastName": "User",
+    "email": "testuser@example.com",
+    "password": "123"
+  },
+  "duplicate_email": {
+    "firstName": "John",
+    "lastName": "Smith",
+    "email": "existingemail@example.com",
+    "password": "SecurePass@123"
+  },
+  "short_password": {
+    "firstName": "Jane",
+    "lastName": "Doe",
+    "email": "shortpass@example.com",
+    "password": "A1@"
+  },
+  "email_missing_domain": {
+    "firstName": "Mark",
+    "lastName": "Lee",
+    "email": "user@",
+    "password": "SecurePass@123"
+  },
+  "email_just_string": {
+    "firstName": "Sam",
+    "lastName": "Doe",
+    "email": "invalidemail",
+    "password": "SecurePass@123"
+  },
+  "email_missing_numbers": {
+    "firstName": "Tim",
+    "lastName": "Wells",
+    "email": "user@domain.com",
+    "password": "SecurePass@@"
+  },
+  "password_no_uppercase": {
+    "firstName": "Sam",
+    "lastName": "Low",
+    "email": "nouppercase@example.com",
+    "password": "lowercase123@"
+  },
+  "password_no_lowercase": {
+    "firstName": "Alex",
+    "lastName": "High",
+    "email": "nolowercase@example.com",
+    "password": "UPPERCASE123@"
+  },
+  "password_no_number": {
+    "firstName": "Leo",
+    "lastName": "Hill",
+    "email": "nonumber@example.com",
+    "password": "NoNumber@"
+  }
+}

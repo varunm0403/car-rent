@@ -1,0 +1,120 @@
+<div class="flex h-screen w-full">
+  <!-- Left Image Section -->
+  <div class="w-1/2 hidden md:block">
+    <img src="assets/images/logincar.png" alt="Car Banner" class="h-full w-full object-cover" />
+  </div>
+  
+  <!-- Right Form Section -->
+  <div class="w-full md:w-1/2 flex flex-col justify-center items-center px-8 sm:px-16 lg:px-24">
+    <div class="w-full max-w-md">
+      <div class="justify-center text-center">
+        <h1 class="text-5xl font-bold text-gray-800 mb-2">Create an account</h1>
+        <p class="text-gray-500 mb-6">Enter your details below to get started</p>
+      </div>
+      
+      <form [formGroup]="registerForm" (ngSubmit)="onRegister()" class="space-y-4">
+        <!-- Name + Surname -->
+        <div class="flex flex-col sm:flex-row gap-4">
+          <div class="flex flex-col w-full">
+            <label for="firstName" class="text-sm font-medium text-gray-700">Name</label>
+            <input id="firstName" type="text" formControlName="firstName"
+            placeholder="Write your name"
+            class="mt-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            <div *ngIf="formControls['firstName'].touched && formControls['firstName'].invalid">
+              <small class="text-red-500" *ngIf="formControls['firstName'].hasError('required')">First name is required.</small>
+              <small class="text-red-500" *ngIf="formControls['firstName'].errors?.['whitespace']">
+                First name cannot be empty or spaces only.
+              </small> 
+              <small class="text-red-500" *ngIf="formControls['firstName'].errors?.['specialChars']">
+                Special characters are not allowed in first name.
+              </small>              
+            </div>
+          </div>
+          <div class="flex flex-col w-full">
+            <label for="lastName" class="text-sm font-medium text-gray-700">Surname</label>
+            <input id="lastName" type="text" formControlName="lastName"
+              placeholder="Write your lastName"
+              class="mt-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              <div *ngIf="formControls['lastName'].touched && formControls['lastName'].invalid">
+                <small class="text-red-500" *ngIf="formControls['lastName'].hasError('required')">Surname is required.</small>
+                <small class="text-red-500" *ngIf="formControls['lastName'].errors?.['whitespace']">Surname cannot be empty or spaces only.</small>   
+                <small class="text-red-500" *ngIf="formControls['lastName'].errors?.['specialChars']">Special characters are not allowed in surname.</small>              
+              </div>
+            </div>
+          </div>
+          
+        <!-- Email -->
+        <div class="flex flex-col">
+          <label for="email" class="text-sm font-medium text-gray-700">Email</label>
+          <input id="email" type="email" formControlName="email"
+          placeholder="Write your email"
+          class="mt-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          <div *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid">
+            <small class="text-red-500">Enter a valid email.</small>
+          </div>
+        </div>
+        <!-- Password Field -->
+        <div class="flex flex-col relative">
+          <label for="password" class="text-sm font-medium text-gray-700">Password</label>
+          <div class="relative">
+            <input
+              id="password"
+              [type]="showPassword ? 'text' : 'password'"
+              formControlName="password"
+              placeholder="Create password"
+              class="mt-1 w-full border border-gray-300 rounded-lg px-4 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              <div *ngIf="formControls.password.invalid && formControls.password.touched" class="error-msg">
+                <small *ngIf="formControls.password.errors?.['required']">Password is required.</small>
+                <small class="text-red-500" *ngIf="formControls.password.errors?.['invalidPassword']">
+                  Password must be at least 8 characters long, contain at least one uppercase letter and one number.
+                </small>
+              </div>   
+            
+          </div>
+          <small class="text-gray-500">Minimum 8 characters with at least one capital letter and one digit</small>
+        </div>
+
+        <!-- Confirm Password Field -->
+        <div class="flex flex-col relative mt-4">
+          <label for="confirmPassword" class="text-sm font-medium text-gray-700">Confirm Password</label>
+          <div class="relative">
+            <input
+              id="confirmPassword"
+              [type]="showConfirmPassword ? 'text' : 'password'"
+              formControlName="confirmPassword"
+              placeholder="Confirm password"
+              class="mt-1 w-full border border-gray-300 rounded-lg px-4 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              <div 
+              *ngIf="registerForm.hasError('mismatch') && 
+                     registerForm.get('password')?.touched && 
+                     registerForm.get('confirmPassword')?.touched"
+              class="error-msg">
+              <small class="text-red-500">Password and Confirm Password do not match.</small>
+            </div>
+          </div>
+        </div>
+          
+          <!-- Button Group -->
+          <div class="flex items-center justify-between gap-4 pt-2">
+            <button type="button" (click)="goTologin()"
+            class="w-full py-2 px-4 bg-gray-200 text-gray-800 rounded-full hover:bg-gray-300">Cancel</button>
+            <button
+            type="submit"
+            [disabled]="!registerForm.valid"
+            [ngClass]="{
+              'bg-red-300 cursor-not-allowed': !registerForm.valid,
+              'bg-red-600 hover:bg-red-700': registerForm.valid
+            }"
+            class="w-full py-2 px-4 text-white rounded-full font-semibold transition">
+            Register
+          </button>
+          
+          </div>
+        </form>
+        
+        <p class="mt-6 text-sm text-center text-gray-600">Already here?
+          <span class="text-black font-semibold hover:underline cursor-pointer" (click)="goTologin()">Log in</span>
+        </p>
+    </div>
+  </div>
+</div>

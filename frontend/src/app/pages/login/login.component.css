@@ -1,0 +1,12 @@
+/* Placeholder style */
+input::placeholder {
+    color: grey;
+    font-size:medium;
+  }
+  
+  /* Actual input text style */
+  input {
+    color: black;
+  }
+  
+  

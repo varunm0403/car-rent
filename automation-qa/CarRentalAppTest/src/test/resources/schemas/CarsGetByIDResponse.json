@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Car Information",
+  "type": "object",
+  "required": [
+    "carId",
+    "model",
+    "location",
+    "pricePerDay",
+    "carRating",
+    "serviceRating",
+    "status",
+    "fuelType",
+    "gearBoxType",
+    "engineCapacity",
+    "passengerCapacity",
+    "fuelConsumption",
+    "climateControlOption",
+    "images"
+  ],
+  "properties": {
+    "carId": {
+      "type": "string",
+      "pattern": "^[a-f\\d]{24}$"
+    },
+    "model": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    },
+    "pricePerDay": {
+      "type": "string",
+      "pattern": "^\\d+(\\.\\d+)?$"
+    },
+    "carRating": {
+      "type": "string",
+      "pattern": "^\\d+(\\.\\d+)?$"
+    },
+    "serviceRating": {
+      "type": "string",
+      "pattern": "^\\d+(\\.\\d+)?$"
+    },
+    "status": {
+      "type": "string"
+    },
+    "fuelType": {
+      "type": "string"
+    },
+    "gearBoxType": {
+      "type": "string"
+    },
+    "engineCapacity": {
+      "type": "string"
+    },
+    "passengerCapacity": {
+      "type": "string",
+      "pattern": "^\\d+$"
+    },
+    "fuelConsumption": {
+      "type": "string"
+    },
+    "climateControlOption": {
+      "type": "string"
+    },
+    "images": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uri"
+      },
+      "minItems": 1
+    }
+  },
+  "additionalProperties": false
+}

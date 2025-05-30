@@ -1,0 +1,63 @@
+[
+    {
+      "car": "Mercedes-Benz A class 2019",
+      "image": "assets/images/mercedes.png",
+      "orderHistory": "#2437 (06.11.24)",
+      "rating": 4,
+      "feedback": "Fantastic service from start to finish! The booking process was smooth, and the staff was incredibly helpful in answering all my questions.",
+      "user": "Sarah L.",
+      "location": "New York, USA",
+      "date": "05.10.2024"
+    },
+    {
+      "car": "Porsche 911 2021",
+      "image": "assets/images/porsche.png",
+      "orderHistory": "#2437 (06.11.24)",
+      "rating": 4,
+      "feedback": "",
+      "user": "Sarah L.",
+      "location": "New York, USA",
+      "date": "05.10.2024"
+    },
+    {
+      "car": "Nissan Z 2024",
+      "image": "assets/images/nissan-z.png",
+      "orderHistory": "#2437 (06.11.24)",
+      "rating": 4,
+      "feedback": "Fantastic service from start to finish!",
+      "user": "Sarah L.",
+      "location": "New York, USA",
+      "date": "05.10.2024"
+    },
+    {
+      "car": "Mercedes-Benz A class 2019",
+      "image": "assets/images/mercedes.png",
+      "orderHistory": "#2437 (06.11.24)",
+      "rating": 4,
+      "feedback": "Fantastic service from start to finish! The booking process was smooth, and the staff was incredibly helpful in answering all my questions.",
+      "user": "Sarah L.",
+      "location": "New York, USA",
+      "date": "05.10.2024"
+    },
+    {
+      "car": "Porsche 911 2021",
+      "image": "assets/images/porsche.png",
+      "orderHistory": "#2437 (06.11.24)",
+      "rating": 4,
+      "feedback": "",
+      "user": "Sarah L.",
+      "location": "New York, USA",
+      "date": "05.10.2024"
+    },
+    {
+      "car": "Nissan Z 2024",
+      "image": "assets/images/nissan-z.png",
+      "orderHistory": "#2437 (06.11.24)",
+      "rating": 4,
+      "feedback": "Fantastic service from start to finish!",
+      "user": "Sarah L.",
+      "location": "New York, USA",
+      "date": "05.10.2024"
+    }
+  ]
+  

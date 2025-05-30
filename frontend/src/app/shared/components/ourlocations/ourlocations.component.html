@@ -1,0 +1,34 @@
+<div class="flex flex-col bg-[#fff] p-4 lg:p-6 gap-6 overflow-x-hidden">
+    <!-- Top Section: Location List + Map -->
+    <div class="flex flex-col lg:flex-row gap-6 h-[550px]">
+      <!-- Left Column: Location List -->
+      <div class="w-full lg:w-[35%] overflow-y-auto px-2">
+        <h3 class="text-lg text-gray-500 mb-3 uppercase">(Our Locations)</h3>
+        <div
+          *ngFor="let loc of locations; let i = index"
+          (click)="selectLocation(i)"
+          class="p-3.5 mb-2 rounded-lg cursor-pointer border border-gray-200 transition-all duration-200"
+          [ngClass]="{
+            'bg-black text-white': selectedIndex === i,
+            'bg-white text-gray-900 hover:bg-gray-100': selectedIndex !== i
+          }"
+        >
+          <h4 class="text-sm font-semibold">{{ loc.name }}</h4>
+          <p class="text-xs">{{ loc.address }}</p>
+        </div>
+      </div>
+  
+      <!-- Right Column: Map -->
+      <div class="w-full lg:w-[65%] h-full rounded-lg overflow-hidden shadow-md">
+        <iframe
+          width="100%"
+          height="100%"
+          frameborder="0"
+          class="rounded-md"
+          [src]="mapUrl | safe"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+  </div>
+  

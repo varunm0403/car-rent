@@ -1,0 +1,34 @@
+.calendar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(186, 174, 174, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+  }
+  
+  .calendar-overlay.visible {
+    opacity: 0.5;
+    visibility: visible;
+  }
+  
+  .calendar-container {
+    max-width: 500px;
+    width: 90%;
+    transform: scale(0.85);
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  
+  /* Make the select dropdown options readable */
+  select option {
+    font-size: 12px;
+  }

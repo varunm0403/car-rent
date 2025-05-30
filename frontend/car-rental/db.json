@@ -1,0 +1,57 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "title": "a title",
+      "views": 100
+    },
+    {
+      "id": "2",
+      "title": "another title",
+      "views": 200
+    }
+  ],
+  "comments": [
+    {
+      "id": "1",
+      "text": "a comment about post 1",
+      "postId": "1"
+    },
+    {
+      "id": "2",
+      "text": "another comment about post 1",
+      "postId": "1"
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  },
+  "users": [
+    {
+      "id": "e4f645eb-235c-4773-9fea-553a1a22c891",
+      "firstName": "Varun ",
+      "surname": "Mishra",
+      "email": "mishraji0689@gmail.com",
+      "password": "carrent",
+      "role": "admin"
+    },
+    {
+      "id": "b1299f5d-69c1-4ff8-960a-3a12c348f66c",
+      "firstName": "Vaishnavi ",
+      "surname": "Kshirsagar",
+      "email": "vaishnavi@epam.com",
+      "password": "1234",
+      "role": "user",
+      "image": "https://randomuser.me/api/portraits/women/65.jpg"
+    },
+    {
+      "id": "b12897b0-0ea2-4901-9e28-7a6691682bf0",
+      "firstName": "Vaishnavi",
+      "surname": "Mahajan",
+      "email": "mahajanv@epam.com",
+      "password": "Admin1234",
+      "confirmPassword": "Admin1234",
+      "role": "user"
+    }
+  ]
+}

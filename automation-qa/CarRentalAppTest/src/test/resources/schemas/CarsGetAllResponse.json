@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["content", "pageable"],
+  "properties": {
+    "content": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "carId",
+          "imageUrl",
+          "location",
+          "pricePerDay",
+          "carRating",
+          "serviceRating",
+          "status"
+        ],
+        "properties": {
+          "carId": { "type": "string" },
+          "imageUrl": { "type": "string", "format": "uri" },
+          "location": { "type": "string" },
+          "pricePerDay": { "type": "string", "pattern": "^[0-9]+$" },
+          "carRating": { "type": "string", "pattern": "^[0-9](\\.\\d)?$" },
+          "serviceRating": { "type": "string", "pattern": "^[0-9](\\.\\d)?$" },
+          "status": { "type": "string", "enum": ["AVAILABLE", "UNAVAILABLE"] }
+        }
+      }
+    },
+    "pageable": {
+      "type": "object",
+      "required": [
+        "pageNumber",
+        "pageSize",
+        "totalPages",
+        "totalElements"
+      ],
+      "properties": {
+        "pageNumber": { "type": "integer", "minimum": 0 },
+        "pageSize": { "type": "integer", "minimum": 1 },
+        "totalPages": { "type": "integer", "minimum": 1 },
+        "totalElements": { "type": "integer", "minimum": 0 }
+      }
+    }
+  }
+}

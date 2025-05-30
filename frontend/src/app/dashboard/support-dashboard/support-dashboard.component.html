@@ -1,0 +1,145 @@
+<section class="dashboard mt-6 p-4 md:p-6">
+    <!-- Header -->
+    <div class="header flex flex-col md:flex-row md:justify-between md:items-center mb-6 gap-4">
+        <h1 class="text-3xl md:text-5xl font-medium">Bookings</h1>
+        <button class="bg-[#CC1D1D] rounded-3xl px-4 py-2 md:p-3 text-white w-full md:w-auto" 
+                (click)="createNewBooking()">
+            Create new booking
+        </button>
+    </div>
+
+    <!-- Filters -->
+    <div class="filters mb-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- Date Picker -->
+        <div class="flex flex-col relative">
+            <input type="text" 
+                   id="filterDate" 
+                   placeholder="Select date range"
+                   [(ngModel)]="dateRangeDisplay"
+                   (click)="showCalendar = !showCalendar"
+                   class="border border-gray-300 rounded-md p-2 w-full cursor-pointer"
+                   readonly>
+
+            <!-- Calendar Popup -->
+            <div *ngIf="showCalendar" class="absolute w-[300px] sm:w-[400px] md:w-[470px] z-50 top-full left-0 mt-0">
+                <app-calendar 
+                    [initialPickupDate]="filters.startDate"
+                    [initialDropoffDate]="filters.endDate"
+                    (dateRangeSelected)="onDateRangeSelected($event)"
+                    (closeCalendar)="showCalendar = false">
+                </app-calendar>
+            </div>
+        </div>
+
+        <!-- Client Filter -->
+        <div class="flex flex-col">
+            <input type="text" 
+                   id="filterClient" 
+                   placeholder="Enter client name" 
+                   [(ngModel)]="filters.client"
+                   class="border border-gray-300 rounded-md p-2 w-full"/>
+        </div>
+
+        <!-- Status Filter -->
+        <div class="flex flex-col relative">
+            <div class="absolute">
+                <select id="filterStatus" 
+                        [(ngModel)]="filters.status"
+                        class="border border-gray-300 rounded-md p-2 w-52 ">
+                    <option value="">All</option>
+                    <option value="Confirmed">Confirmed</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Cancelled">Cancelled</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Apply Button -->
+        <div class="flex items-end">
+            <button (click)="applyFilters()"
+                    class="text-[#CC1D1D] font-medium px-6 py-2 rounded-md hover:bg-gray-800 w-full md:w-auto mt-4 md:mt-0">
+                Apply Filters
+            </button>
+        </div>
+    </div>
+
+    <!-- Table Container -->
+    <div class="table-container overflow-x-auto bg-white rounded-lg shadow overflow-auto scrollbar-hidden relative">
+        <table class="w-full border border-gray-300 border-collapse">
+            <thead>
+                <tr class="bg-black text-white font-extralight">
+                    <th class="p-3 text-center border border-gray-300">Date</th>
+                    <th class="p-3 text-center border border-gray-300">Booking Id</th>
+                    <th class="p-3 text-center border border-gray-300 sm:table-cell">Client</th>
+                    <th class="p-3 text-center border border-gray-300">Car</th>
+                    <th class="p-3 text-center border border-gray-300 md:table-cell">Made by</th>
+                    <th class="p-3 text-center border border-gray-300">Status</th>
+                    <th class="p-3 text-center border border-gray-300 lg:table-cell">Period</th>
+                    <th class="p-3 text-center border border-gray-300">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let booking of filteredBookings; let i = index" class="hover:bg-gray-50">
+                    <td class="p-3 border border-gray-200 text-center">{{ currentDate }}</td>
+                    <td class="p-3 font-medium border border-gray-200 text-center">{{ booking.orderId }}</td>
+                    <td class="p-3 sm:table-cell border border-gray-200 text-center">{{ booking.clientName }}</td>
+                    <td class="p-3 border border-gray-200 text-center">{{ booking.car.model }}</td>
+                    <td class="p-3 md:table-cell border border-gray-200 text-center">Support Agent</td>
+                    <td class="p-3 border border-gray-200 text-center">
+                        <span [ngClass]="{
+                            'bg-green-100 text-green-800': booking.status === 'Confirmed',
+                            'bg-yellow-100 text-yellow-800': booking.status === 'Pending',
+                            'bg-red-100 text-red-800': booking.status === 'Cancelled'
+                        }" class="px-2 py-1 rounded-full">
+                            {{ booking.status }}
+                        </span>
+                    </td>
+                    <td class="p-3 lg:table-cell border border-gray-200 text-center">{{ getDurationInDays(booking) }} days</td>
+                    <td class="p-3 relative  border border-gray-200 text-center">
+                        <button class="cursor-pointer p-1" (click)="toggleDropdown(i)">
+                            <svg width="19" height="4" viewBox="0 0 19 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1.0647 2C1.0647 2.26522 1.17005 2.51957 1.35759 2.70711C1.54513 2.89464 1.79948 3 2.0647 3C2.32991 3 2.58427 2.89464 2.7718 2.70711C2.95934 2.51957 3.0647 2.26522 3.0647 2C3.0647 1.73478 2.95934 1.48043 2.7718 1.29289C2.58427 1.10536 2.32991 1 2.0647 1C1.79948 1 1.54513 1.10536 1.35759 1.29289C1.17005 1.48043 1.0647 1.73478 1.0647 2ZM8.0647 2C8.0647 2.26522 8.17005 2.51957 8.35759 2.70711C8.54513 2.89464 8.79948 3 9.0647 3C9.32991 3 9.58427 2.89464 9.7718 2.70711C9.95934 2.51957 10.0647 2.26522 10.0647 2C10.0647 1.73478 9.95934 1.48043 9.7718 1.29289C9.58427 1.10536 9.32991 1 9.0647 1C8.79948 1 8.54513 1.10536 8.35759 1.29289C8.17005 1.48043 8.0647 1.73478 8.0647 2ZM15.0647 2C15.0647 2.26522 15.1701 2.51957 15.3576 2.70711C15.5451 2.89464 15.7995 3 16.0647 3C16.3299 3 16.5843 2.89464 16.7718 2.70711C16.9593 2.51957 17.0647 2.26522 17.0647 2C17.0647 1.73478 16.9593 1.48043 16.7718 1.29289C16.5843 1.10536 16.3299 1 16.0647 1C15.7995 1 15.5451 1.10536 15.3576 1.29289C15.1701 1.48043 15.0647 1.73478 15.0647 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <div *ngIf="dropdownIndex === i" class=" absolute mt-2 w-40 right-0 bg-white rounded-lg shadow-lg z-50 border border-gray-200 overflow-auto">
+                            <div class="flex flex-col">
+                                <button class="text-white font-medium bg-black px-4 py-2 rounded-t-md text-left hover:bg-gray-800"
+                                        (click)="editBooking(booking)">
+                                    View Details
+                                </button>
+                                <button (click)="cancelBooking(booking)"
+        [disabled]="booking.status === 'Cancelled' || cancelTime(booking)"
+        [ngClass]="{
+            'text-red-600 hover:text-white hover:bg-red-600 cursor-pointer': booking.status !== 'Cancelled' && !cancelTime(booking),
+            'text-gray-400 bg-gray-100 cursor-not-allowed': booking.status === 'Cancelled' || cancelTime(booking)
+        }"
+        class="px-4 py-2 rounded-b-md text-left font-medium">
+    Cancel
+</button>
+
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr *ngIf="filteredBookings.length === 0">
+                    <td colspan="8" class="p-4 text-center text-gray-500 border border-gray-200">
+                        No bookings found matching your criteria
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+    </div>
+    <!-- Support Dashboard Template -->
+<div *ngIf="showDialog" class="fixed inset-0  bg-opacity-50 flex justify-center items-center z-1000">
+    <app-confirmation-dialog
+      [title]="'Cancel Booking'"
+      [message]="'Are you sure you want to cancel booking ' + selectedBooking?.orderId + '?'"
+      [confirmText]="'Yes, Cancel'"
+      [cancelText]="'No, Keep'"
+      (confirm)="onConfirmCancel()"
+      (cancel)="onCancelDialog()">
+    </app-confirmation-dialog>
+  </div>
+  
+</section>

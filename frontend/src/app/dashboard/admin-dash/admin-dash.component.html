@@ -1,0 +1,153 @@
+<div class="p-6 max-w-7xl mx-auto">
+    <h1 class="text-2xl font-medium mb-6">Dashboard</h1>
+    
+    <!-- Filter Controls -->
+    <div class="flex flex-wrap gap-4 mb-8 items-end">
+      <!-- Report Type Filter -->
+      <div class="flex-1 min-w-[200px]">
+        <label for="report-type" class="block text-sm font-medium text-gray-700 mb-1">Report type</label>
+        <div class="relative">
+          <select id="report-type" 
+                  [(ngModel)]="selectedReportType"
+                  class="block w-full rounded-md border border-gray-300 py-2 pl-3 pr-10 text-base focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm">
+            <option *ngFor="let type of reportTypes" [value]="type">{{ type }}</option>
+          </select>
+        </div>
+      </div>
+      
+      <!-- Period Filter -->
+      <div class="flex-1 min-w-[200px]">
+        <label for="period" class="block text-sm font-medium text-gray-700 mb-1">Period</label>
+        <div class="relative">
+          <button 
+            id="period"
+            type="button"
+            (click)="toggleCalendar()"
+            class="block w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left text-base focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm">
+            {{ displayDateRange }}
+          </button>
+          
+          <!-- Calendar Popup -->
+          <div *ngIf="showCalendar" class="absolute z-10 mt-1 bg-white">
+            <app-calendar
+              (dateRangeSelected)="onDateRangeSelected($event)"
+              (closeCalendar)="closeCalendarPopup()"
+              [initialPickupDate]="getInitialPickupDate()"
+              [initialDropoffDate]="getInitialDropoffDate()">
+            </app-calendar>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Location Filter -->
+      <div class="flex-1 min-w-[200px]">
+        <label for="location" class="block text-sm font-medium text-gray-700 mb-1">Location</label>
+        <div class="relative">
+          <select id="location" 
+                  [(ngModel)]="selectedLocation"
+                  class="block w-full rounded-md border border-gray-300 py-2 pl-3 pr-10 text-base focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm">
+            <option *ngFor="let location of locations" [value]="location">{{ location }}</option>
+          </select>
+        </div>
+      </div>
+      
+      <!-- Create Report Button -->
+      <button 
+        (click)="createReport()"
+        class="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-md">
+        Create report
+      </button>
+      
+      <!-- Download Dropdown -->
+      <div class="relative">
+        <button 
+          (click)="toggleDownloadMenu()" 
+          class="flex items-center space-x-1 py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-50 bg-white"
+        >
+          <span>Download</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        
+        <div *ngIf="isDownloadMenuOpen" class="absolute right-0 mt-1 w-36 bg-white border border-gray-200 rounded-md shadow-lg z-10">
+          <div class="py-1">
+            <button (click)="downloadReport('PDF')" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+              Export PDF
+            </button>
+            <button (click)="downloadReport('XLS')" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+              Export XLS
+            </button>
+            <button (click)="downloadReport('CSV')" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+              Export CSV
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Report Content Area -->
+    <div *ngIf="showReport" class="mb-8">
+      <!-- Report Table -->
+      <div class="overflow-x-auto">
+        <table class="min-w-full border-collapse">
+          <thead>
+            <tr class="bg-black text-white text-xs">
+              <th class="py-2 px-3 text-left border-r border-gray-600">Period start</th>
+              <th class="py-2 px-3 text-left border-r border-gray-600">Period end</th>
+              <th class="py-2 px-3 text-left border-r border-gray-600">Location</th>
+              <th class="py-2 px-3 text-left border-r border-gray-600">Car model</th>
+              <th class="py-2 px-3 text-left border-r border-gray-600">Car ID</th>
+              <th class="py-2 px-3 text-left border-r border-gray-600">Days of rent (per car)</th>
+              <th class="py-2 px-3 text-left border-r border-gray-600">Reservations during period</th>
+              <th class="py-2 px-3 text-left border-r border-gray-600">Mileage at the beginning (km)</th>
+              <th class="py-2 px-3 text-left border-r border-gray-600">Mileage at the end (km)</th>
+              <th class="py-2 px-3 text-left border-r border-gray-600">Total mileage (km)</th>
+              <th class="py-2 px-3 text-left border-r border-gray-600">Average mileage per reservation (km)</th>
+              <th class="py-2 px-3 text-left border-r border-gray-600">Delta of Average mileage per reservation to previous period (%)</th>
+              <th class="py-2 px-3 text-left border-r border-gray-600">Average Feedback (1 to 5)</th>
+              <th class="py-2 px-3 text-left border-r border-gray-600">Minimum Feedback (1 to 5)</th>
+              <th class="py-2 px-3 text-left border-r border-gray-600">Delta of Average Feedback to previous period (%)</th>
+              <th class="py-2 px-3 text-left border-r border-gray-600">Revenue for reservations finished within reported period (EUR)</th>
+              <th class="py-2 px-3 text-left">Delta of revenue for reservations finished to previous period (%)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of reportData" class="border-b border-gray-200 hover:bg-gray-50 text-sm">
+              <td class="py-2 px-3 border-r border-gray-200">{{ row.periodStart }}</td>
+              <td class="py-2 px-3 border-r border-gray-200">{{ row.periodEnd }}</td>
+              <td class="py-2 px-3 border-r border-gray-200">{{ row.location }}</td>
+              <td class="py-2 px-3 border-r border-gray-200">{{ row.carModel }}</td>
+              <td class="py-2 px-3 border-r border-gray-200">{{ row.carId }}</td>
+              <td class="py-2 px-3 border-r border-gray-200">{{ row.daysOfRent }}</td>
+              <td class="py-2 px-3 border-r border-gray-200">{{ row.reservations }}</td>
+              <td class="py-2 px-3 border-r border-gray-200">{{ row.mileageAtBeginning }}</td>
+              <td class="py-2 px-3 border-r border-gray-200">{{ row.mileageAtEnd }}</td>
+              <td class="py-2 px-3 border-r border-gray-200">{{ row.totalMileage }}</td>
+              <td class="py-2 px-3 border-r border-gray-200">{{ row.averageMileage }}</td>
+              <td class="py-2 px-3 border-r border-gray-200" [ngClass]="{
+                'text-red-600': row.deltaOfAverageMileage.includes('-'),
+                'text-green-600': row.deltaOfAverageMileage.includes('+')
+              }">{{ row.deltaOfAverageMileage }}</td>
+              <td class="py-2 px-3 border-r border-gray-200">{{ row.averageFeedback }}</td>
+              <td class="py-2 px-3 border-r border-gray-200">{{ row.minimumFeedback }}</td>
+              <td class="py-2 px-3 border-r border-gray-200" [ngClass]="{
+                'text-red-600': row.deltaOfAverageFeedback.includes('-'),
+                'text-green-600': row.deltaOfAverageFeedback.includes('+')
+              }">{{ row.deltaOfAverageFeedback }}</td>
+              <td class="py-2 px-3 border-r border-gray-200">{{ row.revenue }}</td>
+              <td class="py-2 px-3" [ngClass]="{
+                'text-red-600': row.deltaOfRevenue.includes('-'),
+                'text-green-600': row.deltaOfRevenue.includes('+')
+              }">{{ row.deltaOfRevenue }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <!-- Empty State -->
+    <div *ngIf="!showReport" class="bg-gray-50 p-6 rounded-lg border border-gray-200 min-h-[400px] flex items-center justify-center">
+      <p class="text-gray-500 text-center">Select filters and click "Create report" to generate a report.</p>
+    </div>
+  </div>

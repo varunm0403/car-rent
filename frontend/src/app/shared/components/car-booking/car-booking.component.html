@@ -1,0 +1,131 @@
+<section class="m-5">
+  <!-- Navigation -->
+  <div class="navigation flex items-center space-x-2 p-2 mb-6">
+    <p class="text-gray-500">Cars</p>
+    <svg width="4" height="6" viewBox="0 0 4 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0.440861 0.175972C0.496585 0.120186 0.562758 0.0759309 0.635597 0.0457363C0.708436 0.0155417 0.786511 0 0.865361 0C0.94421 0 1.02229 0.0155417 1.09512 0.0457363C1.16796 0.0759309 1.23414 0.120186 1.28986 0.175972L3.68986 2.57597C3.80222 2.68847 3.86533 2.84097 3.86533 2.99997C3.86533 3.15897 3.80222 3.31147 3.68986 3.42397L1.28986 5.82397C1.23418 5.87978 1.16805 5.92408 1.09525 5.95434C1.02245 5.98459 0.944405 6.00021 0.865568 6.00031C0.786731 6.0004 0.708647 5.98496 0.635776 5.95488C0.562905 5.9248 0.496673 5.88065 0.440861 5.82497C0.385049 5.76929 0.340751 5.70316 0.310496 5.63036C0.28024 5.55756 0.26462 5.47952 0.264527 5.40068C0.264434 5.32184 0.27987 5.24376 0.309954 5.17089C0.340038 5.09802 0.38418 5.03178 0.439861 4.97597L2.41786 2.99997L0.441861 1.02397C0.3295 0.911472 0.266388 0.758973 0.266388 0.599973C0.266388 0.440972 0.328501 0.288472 0.440861 0.175972Z" fill="black"/>
+    </svg>
+    <p>Car booking</p>
+  </div>
+ 
+  <!-- Header -->
+  <div class="header">
+    <h1 class="text-4xl md:text-5xl font-medium">Car booking</h1>
+  </div>
+ 
+  <!-- Main content -->
+  <div class="main flex flex-col lg:flex-row lg:gap-3 xl:gap-5 space-y-5 lg:space-y-0 lg:space-x-5 mt-6">
+    <!-- Left Content -->
+    <div class="content flex-1 max-w-xs">
+      <!-- Personal Info -->
+      <!-- Client Name for Support Role -->
+<div *ngIf="userRole === 'Support'; else personalInfoBlock" class="clientSelect">
+  <p class="my-2 font-medium">Client Name</p>
+  <select [(ngModel)]="clientName" class="w-full max-w-md border px-3 py-2 rounded text-sm">
+    <option *ngFor="let client of clients" [value]="client">{{ client }}</option>
+  </select>
+</div>
+
+<!-- Default Personal Info for Other Roles -->
+<ng-template #personalInfoBlock>
+  <div class="personalInfo">
+    <p class="my-2 font-medium">Personal Info</p>
+    <div class="data border text-[13px] w-full max-w-md space-y-1.5 px-3 py-2 rounded">
+      <p>{{ userService.getCurrentUser()?.name }}</p>
+      <p>{{ userService.getCurrentUser()?.email }}</p>
+      <p>{{ userService.getCurrentUser()?.phone }}</p>
+    </div>
+  </div>
+</ng-template>
+
+
+      <!-- Location -->
+      <div class="location mt-6">
+        <p class="my-2 font-medium">Location</p>
+        <div class="container flex justify-between border text-[13px] w-full max-w-md space-y-1.5 p-2 rounded">
+          <div class="data">
+            <p class="text-[12px] text-gray-500">Pick-up location</p>
+            <p class="font-medium">{{ car?.location.city }} {{ car?.location.country }}</p>
+            <p class="text-[12px] text-gray-500">Drop-off location</p>
+            <p class="font-medium">{{ car?.location.city }} {{ car?.location.country }}</p>
+          </div>
+          <div class="change">
+            <button class="text-gray-500">Change</button>
+          </div>
+        </div>
+      </div>
+ 
+      <!-- Date & Time -->
+      <div class="Date mt-6">
+        <p class="my-2 font-medium">Date & Time</p>
+        <div class="container flex justify-between border p-2 w-full max-w-md space-y-1.5 py-2 rounded text-[13px]">
+          <div class="data">
+            <p class="text-[12px] text-gray-500">Pick-up date & time</p>
+            <p class="font-medium">{{ pickupDate | date: 'mediumDate' }} | {{ pickupTime }}</p>
+            <p class="text-[12px] text-gray-500">Drop-off date & time</p>
+            <p class="font-medium">{{ dropoffDate | date: 'mediumDate' }} | {{ dropoffTime }}</p>
+          </div>
+          <div class="change relative">
+            <button (click)="showCalendar('pickup')" class="text-gray-500">Change</button>
+       
+            <!-- Calendar only shows if 'pickup' selected -->
+            <div class="absolute left-30 lg:left-60 top-full z-50" *ngIf="calendarVisible">
+              <app-view-calender
+                [initialPickupDate]="pickupDate"
+                [initialDropoffDate]="dropoffDate"
+                [initialPickupTime]="pickupTime"
+                [initialDropoffTime]="dropoffTime"
+                (dateRangeSelected)="onDateRangeSelected($event)"
+                (closeCalendar)="closeCalendar()">
+              </app-view-calender>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+    <!-- Car Card -->
+    <div class="card bg-[#F0F0F0] w-full max-w-md p-4 lg:mt-0">
+      <img [src]="car?.images[0] || car?.mainPhoto" alt="Car Image" class="w-full h-[200px] object-cover rounded" />
+      <p class="text-xl font-semibold mt-2">{{ car?.name || car?.model }}</p>
+      <p class="text-gray-600">{{ car?.location.city }} {{ car?.location.country }}</p>
+      <hr class="border-1 border-[#C4C4C4] my-2" />
+ 
+      <!-- Price Details -->
+      <div class="amount text-sm text-gray-700 space-y-1">
+        <p>Price per day: ${{ car?.pricePerDay }}</p>
+        <p>Number of days: {{ getTotalDays() }}</p>
+        <p class="font-medium text-lg text-black">
+          Total: ${{ getTotalCost() }}
+        </p>
+        <p>Deposit: $2000</p>
+      </div>
+ 
+      <button
+        (click)="confirmBooking()"
+        class="w-full bg-[#CC1D1D] text-white py-3 rounded-md hover:bg-[#a81818] transition-colors mt-4"
+      >
+        Confirm Booking
+      </button>
+    </div>
+  </div>
+
+  <!-- Conditionally render the calendar component -->
+  <!-- <app-view-calender *ngIf="calendarVisible"
+                     [initialPickupDate]="pickupDate"
+                     [initialDropoffDate]="dropoffDate"
+                     [initialPickupTime]="pickupTime"
+                     [initialDropoffTime]="dropoffTime"
+                     (dateRangeSelected)="onDateRangeSelected($event)"
+                     (closeCalendar)="closeCalendar()">
+  </app-view-calender>
+ -->
+  <!-- Confirmation Dialog -->
+  <app-confirmation-dialog
+    *ngIf="showSuccessAlert"
+    title="Booking Confirmed!"
+    message="Your car has been successfully booked. You can view all your bookings in the My Bookings section."
+    [isAlert]="true"
+    (confirm)="onSuccessAlertClose()"
+  ></app-confirmation-dialog>
+</section>

@@ -1,0 +1,92 @@
+<div class="p-4 sm:p-6 bg-white">
+  <h2 class="text-base sm:text-lg text-gray-500 mb-3 uppercase pb-2">
+    (RECENT FEEDBACK)
+  </h2>
+ 
+  <div #scrollContainer class="flex overflow-x-auto gap-4 no-scrollbar scroll-smooth">
+    <div
+      *ngFor="let feedback of feedbacks"
+      class="flex-shrink-0 w-70 sm:w-80 md:w-96 bg-white mx-1 border rounded-xl shadow p-3 sm:p-4 cursor-pointer"
+    >
+      <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
+        <img
+          [src]="feedback.carImage"
+          alt="car"
+          class="w-full sm:w-28 h-28 object-cover rounded-md"
+        />
+        <div class="flex flex-col justify-between">
+          <div>
+            <h3 class="text-base sm:text-lg font-bold">{{ feedback.carModel }}</h3>
+           
+            <div class="text-yellow-500 mt-1 text-sm">
+              <ng-container *ngFor="let star of [1, 2, 3, 4, 5]; let i = index">
+                <span *ngIf="i < feedback.rating">★</span
+                ><span *ngIf="i >= feedback.rating">☆</span>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+ 
+      <p
+        *ngIf="feedback.feedbackText"
+        class="text-sm mt-3 text-gray-700 line-clamp-3"
+      >
+        "{{ feedback.feedbackText }}"
+      </p>
+ 
+      <div
+        class="flex justify-between items-center mt-4 text-sm text-gray-500"
+      >
+       
+        <span>{{ feedback.date }}</span>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- Scroll arrows -->
+  <div class="flex justify-end mt-4 gap-2">
+    <button
+      (click)="scrollLeft()"
+      [disabled]="!canScrollLeft"
+      class="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center bg-white border rounded-full shadow hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+    >
+      <!-- <svg
+      *ngIf="canScrollLeft; else leftDisabled"
+      width="20" height="12" viewBox="0 0 20 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 6H19M1 6L6.14286 11M1 6L6.14286 1" stroke="#DCDCDD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg> -->
+      <svg class="rotate-180"
+      *ngIf="canScrollLeft; else leftDisabled"
+      width="20" height="12" viewBox="0 0 20 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M19 6H1M19 6L13.8571 11M19 6L13.8571 1" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+       
+      <ng-template #leftDisabled>
+        <svg width="20" height="12" viewBox="0 0 20 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 6H19M1 6L6.14286 11M1 6L6.14286 1" stroke="#DCDCDD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>          
+      </ng-template>
+    </button>
+ 
+    <button
+      (click)="scrollRight()"
+      [disabled]="!canScrollRight"
+      class="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center bg-white border rounded-full shadow hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+    >
+    <svg
+    *ngIf="canScrollRight; else rightDisabled"
+    width="20" height="12" viewBox="0 0 20 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M19 6H1M19 6L13.8571 11M19 6L13.8571 1" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+       
+      <ng-template #rightDisabled>
+        <svg width="20" height="12" viewBox="0 0 20 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19 6H1M19 6L13.8571 11M19 6L13.8571 1" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+         
+      </ng-template>
+    </button>
+  </div>
+</div>
+ 
